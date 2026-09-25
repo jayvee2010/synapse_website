@@ -219,21 +219,8 @@ const teamMembers: TeamMember[] = [
       "https://www.linkedin.com/in/arnav-mehta-508416429?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
   {
-    id: "logistics-01",
-    slotNumber: "10",
-    name: "Debsuvra Sinha",
-    domain: "Logistics",
-    role: "Logistics",
-    category: "events_logistics",
-    affiliation: "Logistics Crew · SIT Pune",
-    badge: "LOGISTICS",
-    badgeColor:
-      "border-blue-400 text-blue-300 bg-blue-950/60 shadow-[0_0_8px_rgba(96,165,250,0.3)]",
-    icon: "📦",
-  },
-  {
     id: "logistics-02",
-    slotNumber: "11",
+    slotNumber: "10",
     name: "Shaumik Ahlawat",
     domain: "Logistics",
     role: "Logistics",
@@ -252,7 +239,7 @@ const teamMembers: TeamMember[] = [
   // ==========================================
   {
     id: "doc-01",
-    slotNumber: "12",
+    slotNumber: "11",
     name: "Novera Zahid",
     domain: "Documentation",
     role: "Documentation",
@@ -269,7 +256,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "doc-02",
-    slotNumber: "13",
+    slotNumber: "12",
     name: "Aishani Gupta",
     domain: "Documentation",
     role: "Documentation",
@@ -286,7 +273,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "anchor-01",
-    slotNumber: "14",
+    slotNumber: "13",
     name: "Avni Singh",
     domain: "Anchor",
     role: "Anchoring Team",
@@ -303,7 +290,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "anchor-02",
-    slotNumber: "15",
+    slotNumber: "14",
     name: "Zachariah Bobby",
     domain: "Anchor",
     role: "Anchor",
@@ -318,7 +305,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "anchor-03",
-    slotNumber: "16",
+    slotNumber: "15",
     name: "Triguna Khati",
     domain: "Anchor",
     role: "Anchor",
@@ -340,7 +327,7 @@ const teamMembers: TeamMember[] = [
   // ==========================================
   {
     id: "social-01",
-    slotNumber: "17",
+    slotNumber: "16",
     name: "Arhan Nair",
     domain: "Social Media",
     role: "Social Media",
@@ -355,7 +342,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "social-02",
-    slotNumber: "18",
+    slotNumber: "17",
     name: "Sukhman Kaur",
     domain: "Social Media",
     role: "Social Media",
@@ -370,7 +357,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "editor-01",
-    slotNumber: "19",
+    slotNumber: "18",
     name: "Gaurav Singh Verma",
     domain: "Editor",
     role: "Editor",
@@ -386,7 +373,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "photo-01",
-    slotNumber: "20",
+    slotNumber: "19",
     name: "Samik Dorlikar",
     domain: "Photographers",
     role: "Photographer",
@@ -403,7 +390,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "photo-02",
-    slotNumber: "21",
+    slotNumber: "20",
     name: "Srishti Raj",
     domain: "Photographers",
     role: "Photographer",
@@ -418,7 +405,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "photo-03",
-    slotNumber: "22",
+    slotNumber: "21",
     name: "Akshit Joglekar",
     domain: "Photographers",
     role: "Photographer",
@@ -436,7 +423,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: "design-02",
-    slotNumber: "23",
+    slotNumber: "22",
     name: "Krishita Biradar",
     domain: "Design",
     role: "Design",
