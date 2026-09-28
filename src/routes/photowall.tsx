@@ -37,12 +37,11 @@ export interface PhotoItem {
   date: string;
   category: "Grand Finale" | "Prizes & Awards" | "Behind The Scenes" | "Keynote & Speech" | "Hackathon Floor";
   location: string;
-  caption: string;
   status: "UNLOCKED" | "LOCKED";
   isRealPhoto: boolean;
 }
 
-// CENTRALIZED PHOTO ARCHIVE DATA (25 MEMORY CARTRIDGES)
+// CENTRALIZED PHOTO ARCHIVE DATA (25 MEMORY CARTRIDGES - NO TEXT DESCRIPTIONS)
 export const PHOTOS_DATA: PhotoItem[] = [
   {
     id: 1,
@@ -52,7 +51,6 @@ export const PHOTOS_DATA: PhotoItem[] = [
     date: "26 Sep 2026",
     category: "Prizes & Awards",
     location: "Main Stage · SIT Pune",
-    caption: "Track winners receiving certificates of excellence and cash prize awards at the Synapse 1.0 Grand Finale.",
     status: "UNLOCKED",
     isRealPhoto: true,
   },
@@ -64,7 +62,6 @@ export const PHOTOS_DATA: PhotoItem[] = [
     date: "26 Sep 2026",
     category: "Grand Finale",
     location: "Auditorium · SIT Pune",
-    caption: "Champion teams celebrating alongside hackathon organizers and corporate mentors from Nasdaq & Innvolution.",
     status: "UNLOCKED",
     isRealPhoto: true,
   },
@@ -76,7 +73,6 @@ export const PHOTOS_DATA: PhotoItem[] = [
     date: "26 Sep 2026",
     category: "Prizes & Awards",
     location: "Main Stage · SIT Pune",
-    caption: "Top finalist teams honored on stage following 8 hours of intense prototype building and live judging demos.",
     status: "UNLOCKED",
     isRealPhoto: true,
   },
@@ -88,7 +84,6 @@ export const PHOTOS_DATA: PhotoItem[] = [
     date: "25 Sep 2026",
     category: "Behind The Scenes",
     location: "SIT Campus Courtyard",
-    caption: "The student organizing team showcasing the handcrafted newspaper SYNAPSE banner prepared for venue decoration.",
     status: "UNLOCKED",
     isRealPhoto: true,
   },
@@ -100,7 +95,6 @@ export const PHOTOS_DATA: PhotoItem[] = [
     date: "26 Sep 2026",
     category: "Keynote & Speech",
     location: "Seminar Hall · SIT Pune",
-    caption: "SIT Pune faculty heads addressing hackathon participants and kicking off the 8-Hour AI Hackathon sprint.",
     status: "UNLOCKED",
     isRealPhoto: true,
   },
@@ -124,7 +118,6 @@ export const PHOTOS_DATA: PhotoItem[] = [
       date: "26 Sep 2026",
       category,
       location: "SIT Pune Campus",
-      caption: `Synapse 1.0 moment #${formattedSlot}. Replace image in /public/photowall/photo_${formattedSlot}.jpg to update photo.`,
       status: "UNLOCKED" as const,
       isRealPhoto: false,
     };
@@ -257,12 +250,8 @@ function PhotoWallPage() {
             MEMORY ARCHIVE
           </h1>
 
-          <p className="mt-3 text-xs sm:text-sm text-foreground/80 font-sans max-w-xl mx-auto leading-relaxed">
-            &gt; Scroll through 25 unlocked moments captured during Synapse 1.0 at Symbiosis Institute of Technology (SIT), Pune.
-          </p>
-
           {/* STATUS HUD BAR */}
-          <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-4 py-2 border border-stone-800 bg-stone-950/80 backdrop-blur-sm text-[11px] font-hud text-foreground/80">
+          <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-4 py-2 border border-stone-800 bg-stone-950/80 backdrop-blur-sm text-[11px] font-hud text-foreground/80">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#50fa7b] animate-pulse" />
               <span className="text-emerald-300 font-bold">25 / 25 MOMENTS UNLOCKED</span>
@@ -304,8 +293,8 @@ function PhotoWallPage() {
           })}
         </div>
 
-        {/* 25 PHOTO GRID (5x5 DESKTOP, 3-4 TABLET, 2 MOBILE) */}
-        <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
+        {/* LARGE PHOTO GRID (2 COLUMNS DESKTOP FOR LARGE IMAGE VISIBILITY, 1 COLUMN MOBILE) */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {filteredPhotos.map((photo, idx) => (
             <PhotoCartridgeCard
               key={photo.id}
@@ -331,7 +320,7 @@ function PhotoWallPage() {
   );
 }
 
-// RETRO CARTRIDGE CARD COMPONENT
+// MINECRAFT ITEM FRAME PHOTO CARTRIDGE CARD COMPONENT
 function PhotoCartridgeCard({
   photo,
   onClick,
@@ -344,23 +333,34 @@ function PhotoCartridgeCard({
   return (
     <div
       onClick={onClick}
-      className="biome-card group relative flex flex-col justify-between border-2 border-stone-800/90 bg-stone-950/90 hover:border-cyan-400 hover:bg-stone-900/80 transition-all duration-300 shadow-[0_4px_14px_rgba(0,0,0,0.5)] hover:shadow-[0_0_20px_rgba(0,245,212,0.25)] overflow-hidden cursor-pointer"
+      className="minecraft-photo-frame group relative flex flex-col justify-between overflow-hidden cursor-pointer p-2.5 sm:p-3"
     >
-      {/* TOP CARTRIDGE HEADER */}
-      <div className="flex items-center justify-between px-2.5 py-1.5 border-b border-stone-800/80 bg-stone-900/60 text-[9px] font-hud">
-        <span className="text-cyan-400 font-bold tracking-wider">
-          MEMORY #{photo.slotNumber}
-        </span>
-        <div className="flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_4px_#50fa7b]" />
-          <span className="text-[8px] font-mono text-stone-500 uppercase">
-            {photo.category.slice(0, 8)}
+      {/* MINECRAFT PIXEL CORNER RIVETS */}
+      <div className="absolute top-1 left-1 w-1.5 h-1.5 bg-[#8c5c32] border border-[#2b2016]" />
+      <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#8c5c32] border border-[#2b2016]" />
+      <div className="absolute bottom-1 left-1 w-1.5 h-1.5 bg-[#8c5c32] border border-[#2b2016]" />
+      <div className="absolute bottom-1 right-1 w-1.5 h-1.5 bg-[#8c5c32] border border-[#2b2016]" />
+
+      {/* TOP MINECRAFT HUD BAR */}
+      <div className="flex items-center justify-between px-3 py-2 border-b-2 border-[#362215] bg-[#1a130c] text-[10px] sm:text-xs font-hud">
+        <div className="flex items-center gap-2">
+          <span className="text-amber-400 font-bold tracking-widest">
+            SLOT #{photo.slotNumber}
+          </span>
+          <span className="text-stone-500 font-mono text-[9px]">
+            [ITEM FRAME]
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-emerald-400 shadow-[0_0_6px_#50fa7b]" />
+          <span className="text-[9px] font-hud text-emerald-300 uppercase">
+            {photo.category}
           </span>
         </div>
       </div>
 
-      {/* PHOTO PREVIEW / CONTAINER */}
-      <div className="relative aspect-video sm:aspect-[4/3] w-full overflow-hidden bg-stone-950 flex items-center justify-center">
+      {/* LARGE PHOTO PREVIEW CONTAINER */}
+      <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full min-h-[280px] sm:min-h-[380px] overflow-hidden bg-black flex items-center justify-center border-2 border-[#2b2016] my-2">
         {!imageError ? (
           <img
             src={photo.src}
@@ -370,46 +370,45 @@ function PhotoCartridgeCard({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          /* RETRO RETROFALLBACK PLACEHOLDER CARTRIDGE */
-          <div className="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-gradient-to-b from-stone-900/80 to-stone-950 border border-dashed border-stone-800 group-hover:border-cyan-500/50 transition-colors">
-            <span className="text-2xl mb-1 filter drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]">
-              📷
+          /* RETRO FALLBACK PLACEHOLDER CARTRIDGE */
+          <div className="w-full h-full p-6 flex flex-col items-center justify-center text-center bg-[#17110c] border border-dashed border-[#5c3c26]">
+            <span className="text-4xl mb-2 filter drop-shadow-[0_0_12px_rgba(0,229,255,0.5)]">
+              🖼️
             </span>
-            <div className="font-hud text-[10px] text-cyan-300 font-bold tracking-widest">
+            <div className="font-hud text-xs sm:text-sm text-cyan-300 font-bold tracking-widest">
               SLOT #{photo.slotNumber}
             </div>
-            <div className="text-[9px] font-mono text-stone-500 mt-0.5 uppercase">
-              {photo.category}
+            <div className="text-[10px] font-mono text-amber-300 mt-1 uppercase">
+              {photo.category} · {photo.location}
             </div>
           </div>
         )}
 
-        {/* OVERLAY GLOW & HOVER METADATA */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+        {/* OVERLAY SHADOW & TITLE TAG */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity pointer-events-none" />
 
-        {/* HOVER METADATA BADGE */}
-        <div className="absolute bottom-2 left-2 right-2 flex flex-col gap-0.5 text-left pointer-events-none">
-          <span className="font-hud text-[9px] text-white font-bold tracking-tight line-clamp-1 group-hover:text-cyan-300 transition-colors">
+        {/* BOTTOM TITLE BAR */}
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-left pointer-events-none gap-2">
+          <span className="font-hud text-xs sm:text-sm text-white font-bold tracking-wide group-hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
             {photo.title}
           </span>
-          <div className="flex items-center justify-between text-[8px] font-mono text-stone-400">
-            <span>{photo.date}</span>
-            <span className="text-emerald-400">UNLOCKED ✦</span>
-          </div>
+          <span className="font-mono text-[10px] text-amber-300 shrink-0 bg-stone-950/80 px-2 py-0.5 border border-stone-800">
+            {photo.date}
+          </span>
         </div>
       </div>
 
-      {/* FOOTER BAR */}
-      <div className="px-2.5 py-1 text-center bg-stone-950 border-t border-stone-800/60">
-        <span className="font-hud text-[8px] text-cyan-400/80 group-hover:text-cyan-300 uppercase tracking-wider">
-          &gt; CLICK TO INSPECT &lt;
+      {/* BOTTOM ACTION BAR */}
+      <div className="px-3 py-1.5 text-center bg-[#1a130c] border-t-2 border-[#362215]">
+        <span className="font-hud text-[9px] sm:text-[10px] text-cyan-400 group-hover:text-cyan-300 uppercase tracking-widest">
+          &gt; CLICK TO EXPAND &lt;
         </span>
       </div>
     </div>
   );
 }
 
-// RETRO LIGHTBOX OVERLAY MODAL COMPONENT
+// RETRO LIGHTBOX OVERLAY MODAL COMPONENT (NO TEXT DESCRIPTION)
 function RetroLightboxModal({
   photo,
   currentIndex,
@@ -434,107 +433,91 @@ function RetroLightboxModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-fade-in"
       onClick={onClose}
     >
-      {/* TERMINAL OVERLAY DIALOG CONTAINER */}
+      {/* MINECRAFT MODAL DIALOG CONTAINER */}
       <div
-        className="biome-card relative w-full max-w-4xl border-2 border-cyan-500/80 bg-stone-950 shadow-[0_0_40px_rgba(0,229,255,0.25)] flex flex-col overflow-hidden text-left"
+        className="relative w-full max-w-6xl border-[6px] border-[#5c3c26] bg-[#17110c] shadow-[inset_4px_4px_0_#9c683c,inset_-4px_-4px_0_#362215,0_0_50px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* MODAL HEADER BAR */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b-2 border-stone-800 bg-stone-900/90">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b-4 border-[#362215] bg-[#1a130c]">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_8px_#00e5ff]" />
+            <span className="w-3 h-3 bg-cyan-400 shadow-[0_0_10px_#00e5ff]" />
             <span className="font-hud text-xs sm:text-sm font-bold text-cyan-300 tracking-wider">
-              MEMORY #{photo.slotNumber} // ARCHIVE_DISPLAY.RAW
+              MEMORY #{photo.slotNumber} // {photo.title.toUpperCase()}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="font-hud text-xs px-2.5 py-1 border border-stone-700 hover:border-red-400 bg-stone-900 hover:bg-red-950 text-stone-300 hover:text-red-300 transition-colors cursor-pointer"
+            className="font-hud text-xs px-3 py-1 border-2 border-[#5c3c26] hover:border-red-400 bg-[#2b1b11] hover:bg-red-950 text-stone-200 hover:text-red-300 transition-colors cursor-pointer"
             title="Close (ESC)"
           >
             [ X ] CLOSE
           </button>
         </div>
 
-        {/* MAIN MODAL BODY */}
-        <div className="p-4 sm:p-6 flex flex-col gap-4 max-h-[82vh] overflow-y-auto">
+        {/* MAIN MODAL BODY - LARGE PICTURE VIEW */}
+        <div className="p-3 sm:p-6 flex flex-col gap-4 max-h-[85vh] overflow-y-auto">
           {/* IMAGE CONTAINER */}
-          <div className="relative w-full max-h-[55vh] min-h-[260px] bg-stone-900/80 border border-stone-800 flex items-center justify-center overflow-hidden">
+          <div className="relative w-full max-h-[75vh] min-h-[350px] sm:min-h-[550px] bg-black border-2 border-[#362215] flex items-center justify-center overflow-hidden">
             {!modalImageError ? (
               <img
                 src={photo.src}
                 alt={photo.title}
                 onError={() => setModalImageError(true)}
-                className="max-h-[55vh] w-auto max-w-full object-contain mx-auto"
+                className="max-h-[75vh] w-auto max-w-full object-contain mx-auto"
               />
             ) : (
               <div className="p-8 text-center flex flex-col items-center justify-center gap-2">
-                <span className="text-4xl filter drop-shadow-[0_0_12px_rgba(0,229,255,0.4)]">
-                  📷
+                <span className="text-5xl filter drop-shadow-[0_0_16px_rgba(0,229,255,0.5)]">
+                  🖼️
                 </span>
-                <div className="font-hud text-sm text-cyan-300 font-bold">
-                  MEMORY CARTRIDGE #{photo.slotNumber}
+                <div className="font-hud text-base text-cyan-300 font-bold">
+                  SLOT #{photo.slotNumber}
                 </div>
-                <div className="text-xs font-mono text-stone-400 max-w-md">
-                  Photo placeholder ready. Upload image file to{" "}
-                  <code className="text-amber-300">public/photowall/photo_{photo.slotNumber}.jpg</code>
+                <div className="text-xs font-mono text-amber-300">
+                  {photo.title}
                 </div>
               </div>
             )}
           </div>
 
-          {/* METADATA DRAWER */}
-          <div className="border border-stone-800 bg-stone-900/60 p-3.5 sm:p-4 flex flex-col gap-2 rounded-sm">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800/80 pb-2">
-              <h2 className="font-display text-lg sm:text-xl font-bold text-white tracking-wide">
-                {photo.title}
-              </h2>
-              <span className="font-hud text-[10px] px-2.5 py-0.5 border border-emerald-500/50 bg-emerald-950/60 text-emerald-300 uppercase shadow-[0_0_8px_rgba(80,250,123,0.2)]">
-                STATUS: {photo.status}
-              </span>
+          {/* HEADER METADATA BAR (NO TEXT DESCRIPTION) */}
+          <div className="border-2 border-[#362215] bg-[#1a130c] p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 text-xs font-hud">
+            <div>
+              <span className="text-stone-500">LOCATION: </span>
+              <span className="text-cyan-300">{photo.location}</span>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-hud text-stone-300 mt-1">
-              <div>
-                <span className="text-stone-500">DATE: </span>
-                <span className="text-cyan-300">{photo.date}</span>
-              </div>
-              <div>
-                <span className="text-stone-500">CATEGORY: </span>
-                <span className="text-amber-300">{photo.category}</span>
-              </div>
-              <div>
-                <span className="text-stone-500">LOCATION: </span>
-                <span className="text-emerald-300">{photo.location}</span>
-              </div>
+            <div>
+              <span className="text-stone-500">CATEGORY: </span>
+              <span className="text-amber-300">{photo.category}</span>
             </div>
-
-            <p className="mt-1 text-xs sm:text-sm font-sans text-stone-300 leading-relaxed">
-              {photo.caption}
-            </p>
+            <div>
+              <span className="text-stone-500">DATE: </span>
+              <span className="text-emerald-300">{photo.date}</span>
+            </div>
           </div>
         </div>
 
         {/* MODAL FOOTER CONTROLS */}
-        <div className="flex items-center justify-between px-4 py-3 border-t-2 border-stone-800 bg-stone-900/90 text-xs font-hud">
+        <div className="flex items-center justify-between px-4 py-3 border-t-4 border-[#362215] bg-[#1a130c] text-xs font-hud">
           <button
             onClick={onPrev}
-            className="px-3.5 py-1.5 border border-stone-700 hover:border-cyan-400 bg-stone-950 hover:bg-cyan-950 text-stone-200 hover:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 border-2 border-[#5c3c26] hover:border-cyan-400 bg-[#2b1b11] hover:bg-cyan-950 text-stone-200 hover:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <span>&lt; PREVIOUS</span>
             <span className="text-[10px] text-stone-500 hidden sm:inline">(←)</span>
           </button>
 
-          <span className="text-[11px] font-mono text-stone-400">
+          <span className="text-xs font-mono text-amber-300">
             MEMORY {currentIndex + 1} OF {total}
           </span>
 
           <button
             onClick={onNext}
-            className="px-3.5 py-1.5 border border-stone-700 hover:border-cyan-400 bg-stone-950 hover:bg-cyan-950 text-stone-200 hover:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 border-2 border-[#5c3c26] hover:border-cyan-400 bg-[#2b1b11] hover:bg-cyan-950 text-stone-200 hover:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <span>NEXT &gt;</span>
             <span className="text-[10px] text-stone-500 hidden sm:inline">(→)</span>

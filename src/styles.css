@@ -568,6 +568,28 @@
     color: var(--accent-lime);
     animation: bob 2s ease-in-out infinite;
   }
+
+  /* Minecraft Item Frame / Block Border */
+  .minecraft-photo-frame {
+    position: relative;
+    border: 5px solid #5c3c26;
+    background-color: #17110c;
+    box-shadow:
+      inset 4px 4px 0 #9c683c,
+      inset -4px -4px 0 #362215,
+      0 10px 30px rgba(0, 0, 0, 0.8);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .minecraft-photo-frame:hover {
+    border-color: #00f5d4;
+    box-shadow:
+      inset 4px 4px 0 #a5f3fc,
+      inset -4px -4px 0 #0284c7,
+      0 0 25px rgba(0, 245, 212, 0.45),
+      0 16px 36px rgba(0, 0, 0, 0.9);
+    transform: translateY(-4px);
+  }
 }
 
 @keyframes bob {
