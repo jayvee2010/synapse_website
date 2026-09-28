@@ -331,14 +331,23 @@ export function Overlay() {
         </a>
 
         {/* RIGHT ACTION */}
-        <a
-          href={UNSTOP_REGISTER_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="pointer-events-auto pixel-btn-diamond text-xs py-2 px-4 whitespace-nowrap shrink-0"
-        >
-          <span>REGISTER ↗</span>
-        </a>
+        <div className="pointer-events-auto flex items-center gap-2">
+          <Link
+            to="/photowall"
+            className="text-xs font-hud px-3 py-2 border border-stone-700/80 hover:border-cyan-400 text-foreground/90 hover:text-cyan-300 bg-stone-950/90 backdrop-blur-md transition-colors flex items-center gap-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
+          >
+            <span>📷</span>
+            <span className="hidden sm:inline">PHOTO ARCHIVE</span>
+          </Link>
+          <a
+            href={UNSTOP_REGISTER_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="pixel-btn-diamond text-xs py-2 px-4 whitespace-nowrap shrink-0"
+          >
+            <span>REGISTER ↗</span>
+          </a>
+        </div>
       </header>
 
       {/* HERO: SURFACE / NIGHT SKY LAUNCH */}
