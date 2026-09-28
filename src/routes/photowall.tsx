@@ -12,7 +12,7 @@ export const Route = createFileRoute("/photowall")({
       {
         name: "description",
         content:
-          "Official Synapse 1.0 Photo Archive: 25 unlocked memories and moments from the 8-Hour AI Hackathon at Symbiosis Institute of Technology (SIT), Pune.",
+          "Official Synapse 1.0 Photo Archive: Unlocked memories and moments from the 8-Hour AI Hackathon at Symbiosis Institute of Technology (SIT), Pune.",
       },
       {
         property: "og:title",
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/photowall")({
       {
         property: "og:description",
         content:
-          "Explore the official photo archive of Synapse 1.0 at SIT Pune — keynotes, hackathon floor, prizes, and team celebrations.",
+          "Explore the official photo archive of Synapse 1.0 at SIT Pune.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -33,126 +33,41 @@ export interface PhotoItem {
   id: number;
   slotNumber: string;
   src: string;
-  title: string;
-  date: string;
-  category: "Grand Finale" | "Prizes & Awards" | "Behind The Scenes" | "Keynote & Speech" | "Hackathon Floor";
-  location: string;
-  status: "UNLOCKED" | "LOCKED";
   isRealPhoto: boolean;
 }
 
-// CENTRALIZED PHOTO ARCHIVE DATA (25 MEMORY CARTRIDGES - NO TEXT DESCRIPTIONS)
-export const PHOTOS_DATA: PhotoItem[] = [
-  {
-    id: 1,
-    slotNumber: "01",
-    src: "/photowall/photo_01.jpg",
-    title: "Prize Distribution & Winner Certificates",
-    date: "26 Sep 2026",
-    category: "Prizes & Awards",
-    location: "Main Stage · SIT Pune",
-    status: "UNLOCKED",
-    isRealPhoto: true,
-  },
-  {
-    id: 2,
-    slotNumber: "02",
-    src: "/photowall/photo_02.jpg",
-    title: "Winning Teams & Industry Mentors",
-    date: "26 Sep 2026",
-    category: "Grand Finale",
-    location: "Auditorium · SIT Pune",
-    status: "UNLOCKED",
-    isRealPhoto: true,
-  },
-  {
-    id: 3,
-    slotNumber: "03",
-    src: "/photowall/photo_03.jpg",
-    title: "Finalist Teams Stage Recognition",
-    date: "26 Sep 2026",
-    category: "Prizes & Awards",
-    location: "Main Stage · SIT Pune",
-    status: "UNLOCKED",
-    isRealPhoto: true,
-  },
-  {
-    id: 4,
-    slotNumber: "04",
-    src: "/photowall/photo_04.jpg",
-    title: "Handcrafted Synapse Banner & Student Crew",
-    date: "25 Sep 2026",
-    category: "Behind The Scenes",
-    location: "SIT Campus Courtyard",
-    status: "UNLOCKED",
-    isRealPhoto: true,
-  },
-  {
-    id: 5,
-    slotNumber: "05",
-    src: "/photowall/photo_05.jpg",
-    title: "Faculty Address & Opening Ceremony",
-    date: "26 Sep 2026",
-    category: "Keynote & Speech",
-    location: "Seminar Hall · SIT Pune",
-    status: "UNLOCKED",
-    isRealPhoto: true,
-  },
-  // PLACEHOLDER SLOTS 06 THROUGH 25
-  ...Array.from({ length: 20 }, (_, idx) => {
-    const num = idx + 6;
-    const formattedSlot = String(num).padStart(2, "0");
-    const categoriesList: PhotoItem["category"][] = [
-      "Grand Finale",
-      "Hackathon Floor",
-      "Behind The Scenes",
-      "Prizes & Awards",
-      "Keynote & Speech",
-    ];
-    const category = categoriesList[idx % categoriesList.length];
-    return {
-      id: num,
-      slotNumber: formattedSlot,
-      src: `/photowall/photo_${formattedSlot}.jpg`,
-      title: `Memory Node #${formattedSlot}`,
-      date: "26 Sep 2026",
-      category,
-      location: "SIT Pune Campus",
-      status: "UNLOCKED" as const,
-      isRealPhoto: false,
-    };
-  }),
-];
+// CENTRALIZED PHOTO ARCHIVE DATA (25 MEMORY SLOTS — NO CATEGORIES, NO DESCRIPTIONS)
+export const PHOTOS_DATA: PhotoItem[] = Array.from({ length: 25 }, (_, idx) => {
+  const num = idx + 1;
+  const formattedSlot = String(num).padStart(2, "0");
+  const isRealPhoto = num <= 10; // First 10 uploaded photos
+
+  return {
+    id: num,
+    slotNumber: formattedSlot,
+    src: `/photowall/photo_${formattedSlot}.jpg`,
+    isRealPhoto,
+  };
+});
 
 function PhotoWallPage() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>("ALL");
-
-  const categories = [
-    "ALL",
-    "Grand Finale",
-    "Prizes & Awards",
-    "Behind The Scenes",
-    "Keynote & Speech",
-    "Hackathon Floor",
-  ];
-
-  const filteredPhotos =
-    activeCategory === "ALL"
-      ? PHOTOS_DATA
-      : PHOTOS_DATA.filter((p) => p.category === activeCategory);
 
   const handleNext = useCallback(() => {
     if (selectedPhotoIndex !== null) {
-      setSelectedPhotoIndex((prev) => (prev !== null && prev < filteredPhotos.length - 1 ? prev + 1 : 0));
+      setSelectedPhotoIndex((prev) =>
+        prev !== null && prev < PHOTOS_DATA.length - 1 ? prev + 1 : 0
+      );
     }
-  }, [selectedPhotoIndex, filteredPhotos.length]);
+  }, [selectedPhotoIndex]);
 
   const handlePrev = useCallback(() => {
     if (selectedPhotoIndex !== null) {
-      setSelectedPhotoIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : filteredPhotos.length - 1));
+      setSelectedPhotoIndex((prev) =>
+        prev !== null && prev > 0 ? prev - 1 : PHOTOS_DATA.length - 1
+      );
     }
-  }, [selectedPhotoIndex, filteredPhotos.length]);
+  }, [selectedPhotoIndex]);
 
   const handleClose = useCallback(() => {
     setSelectedPhotoIndex(null);
@@ -170,7 +85,8 @@ function PhotoWallPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedPhotoIndex, handleClose, handleNext, handlePrev]);
 
-  const currentPhoto = selectedPhotoIndex !== null ? filteredPhotos[selectedPhotoIndex] : null;
+  const currentPhoto =
+    selectedPhotoIndex !== null ? PHOTOS_DATA[selectedPhotoIndex] : null;
 
   return (
     <div className="relative min-h-screen bg-[#070b14] text-foreground selection:bg-cyan-500 selection:text-black font-sans overflow-x-hidden">
@@ -254,7 +170,7 @@ function PhotoWallPage() {
           <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-4 py-2 border border-stone-800 bg-stone-950/80 backdrop-blur-sm text-[11px] font-hud text-foreground/80">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#50fa7b] animate-pulse" />
-              <span className="text-emerald-300 font-bold">25 / 25 MOMENTS UNLOCKED</span>
+              <span className="text-emerald-300 font-bold">25 MEMORY SLOTS</span>
             </div>
             <span className="text-stone-700 hidden sm:inline">|</span>
             <div className="text-stone-400">
@@ -267,35 +183,9 @@ function PhotoWallPage() {
           </div>
         </div>
 
-        {/* CATEGORY FILTER TABS */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat;
-            const count =
-              cat === "ALL"
-                ? PHOTOS_DATA.length
-                : PHOTOS_DATA.filter((p) => p.category === cat).length;
-
-            return (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`text-[10px] sm:text-[11px] font-hud px-3 py-1.5 border uppercase transition-all duration-200 cursor-pointer ${
-                  isActive
-                    ? "border-cyan-400 text-cyan-300 bg-cyan-950/70 shadow-[0_0_12px_rgba(0,229,255,0.3)] font-bold"
-                    : "border-stone-800 text-foreground/60 hover:text-cyan-400 hover:border-stone-700 bg-stone-950/50"
-                }`}
-              >
-                <span>{cat}</span>
-                <span className="ml-1.5 opacity-60">[{count}]</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* LARGE PHOTO GRID (2 COLUMNS DESKTOP FOR LARGE IMAGE VISIBILITY, 1 COLUMN MOBILE) */}
+        {/* LARGE PHOTO GRID (2 COLUMNS ON DESKTOP, 1 COLUMN ON MOBILE) */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {filteredPhotos.map((photo, idx) => (
+          {PHOTOS_DATA.map((photo, idx) => (
             <PhotoCartridgeCard
               key={photo.id}
               photo={photo}
@@ -310,7 +200,7 @@ function PhotoWallPage() {
         <RetroLightboxModal
           photo={currentPhoto}
           currentIndex={selectedPhotoIndex!}
-          total={filteredPhotos.length}
+          total={PHOTOS_DATA.length}
           onClose={handleClose}
           onNext={handleNext}
           onPrev={handlePrev}
@@ -347,14 +237,11 @@ function PhotoCartridgeCard({
           <span className="text-amber-400 font-bold tracking-widest">
             SLOT #{photo.slotNumber}
           </span>
-          <span className="text-stone-500 font-mono text-[9px]">
-            [ITEM FRAME]
-          </span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 bg-emerald-400 shadow-[0_0_6px_#50fa7b]" />
           <span className="text-[9px] font-hud text-emerald-300 uppercase">
-            {photo.category}
+            ITEM FRAME
           </span>
         </div>
       </div>
@@ -364,7 +251,7 @@ function PhotoCartridgeCard({
         {!imageError ? (
           <img
             src={photo.src}
-            alt={photo.title}
+            alt={`Memory Slot #${photo.slotNumber}`}
             onError={() => setImageError(true)}
             loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -379,23 +266,13 @@ function PhotoCartridgeCard({
               SLOT #{photo.slotNumber}
             </div>
             <div className="text-[10px] font-mono text-amber-300 mt-1 uppercase">
-              {photo.category} · {photo.location}
+              RESERVED SLOT
             </div>
           </div>
         )}
 
-        {/* OVERLAY SHADOW & TITLE TAG */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity pointer-events-none" />
-
-        {/* BOTTOM TITLE BAR */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-left pointer-events-none gap-2">
-          <span className="font-hud text-xs sm:text-sm text-white font-bold tracking-wide group-hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-            {photo.title}
-          </span>
-          <span className="font-mono text-[10px] text-amber-300 shrink-0 bg-stone-950/80 px-2 py-0.5 border border-stone-800">
-            {photo.date}
-          </span>
-        </div>
+        {/* OVERLAY SHADOW */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none" />
       </div>
 
       {/* BOTTOM ACTION BAR */}
@@ -408,7 +285,7 @@ function PhotoCartridgeCard({
   );
 }
 
-// RETRO LIGHTBOX OVERLAY MODAL COMPONENT (NO TEXT DESCRIPTION)
+// RETRO LIGHTBOX OVERLAY MODAL COMPONENT (CLEAN PURE PHOTO VIEWER)
 function RetroLightboxModal({
   photo,
   currentIndex,
@@ -446,7 +323,7 @@ function RetroLightboxModal({
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 bg-cyan-400 shadow-[0_0_10px_#00e5ff]" />
             <span className="font-hud text-xs sm:text-sm font-bold text-cyan-300 tracking-wider">
-              MEMORY #{photo.slotNumber} // {photo.title.toUpperCase()}
+              MEMORY SLOT #{photo.slotNumber}
             </span>
           </div>
           <button
@@ -458,14 +335,14 @@ function RetroLightboxModal({
           </button>
         </div>
 
-        {/* MAIN MODAL BODY - LARGE PICTURE VIEW */}
-        <div className="p-3 sm:p-6 flex flex-col gap-4 max-h-[85vh] overflow-y-auto">
+        {/* MAIN MODAL BODY - PURE LARGE PICTURE VIEW */}
+        <div className="p-3 sm:p-6 flex flex-col items-center justify-center max-h-[85vh] overflow-y-auto">
           {/* IMAGE CONTAINER */}
           <div className="relative w-full max-h-[75vh] min-h-[350px] sm:min-h-[550px] bg-black border-2 border-[#362215] flex items-center justify-center overflow-hidden">
             {!modalImageError ? (
               <img
                 src={photo.src}
-                alt={photo.title}
+                alt={`Memory Slot #${photo.slotNumber}`}
                 onError={() => setModalImageError(true)}
                 className="max-h-[75vh] w-auto max-w-full object-contain mx-auto"
               />
@@ -477,27 +354,11 @@ function RetroLightboxModal({
                 <div className="font-hud text-base text-cyan-300 font-bold">
                   SLOT #{photo.slotNumber}
                 </div>
-                <div className="text-xs font-mono text-amber-300">
-                  {photo.title}
+                <div className="text-xs font-mono text-stone-400">
+                  RESERVED PHOTO SLOT
                 </div>
               </div>
             )}
-          </div>
-
-          {/* HEADER METADATA BAR (NO TEXT DESCRIPTION) */}
-          <div className="border-2 border-[#362215] bg-[#1a130c] p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 text-xs font-hud">
-            <div>
-              <span className="text-stone-500">LOCATION: </span>
-              <span className="text-cyan-300">{photo.location}</span>
-            </div>
-            <div>
-              <span className="text-stone-500">CATEGORY: </span>
-              <span className="text-amber-300">{photo.category}</span>
-            </div>
-            <div>
-              <span className="text-stone-500">DATE: </span>
-              <span className="text-emerald-300">{photo.date}</span>
-            </div>
           </div>
         </div>
 
