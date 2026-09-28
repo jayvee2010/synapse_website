@@ -40,7 +40,7 @@ export interface PhotoItem {
 export const PHOTOS_DATA: PhotoItem[] = Array.from({ length: 25 }, (_, idx) => {
   const num = idx + 1;
   const formattedSlot = String(num).padStart(2, "0");
-  const isRealPhoto = num <= 10; // First 10 uploaded photos
+  const isRealPhoto = num <= 15; // First 15 uploaded photos
 
   return {
     id: num,
