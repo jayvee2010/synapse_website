@@ -36,17 +36,16 @@ export interface PhotoItem {
   isRealPhoto: boolean;
 }
 
-// CENTRALIZED PHOTO ARCHIVE DATA (25 MEMORY SLOTS — NO CATEGORIES, NO DESCRIPTIONS)
-export const PHOTOS_DATA: PhotoItem[] = Array.from({ length: 25 }, (_, idx) => {
+// CENTRALIZED PHOTO ARCHIVE DATA (15 MEMORY SLOTS — NO CATEGORIES, NO DESCRIPTIONS)
+export const PHOTOS_DATA: PhotoItem[] = Array.from({ length: 15 }, (_, idx) => {
   const num = idx + 1;
   const formattedSlot = String(num).padStart(2, "0");
-  const isRealPhoto = num <= 15; // First 15 uploaded photos
 
   return {
     id: num,
     slotNumber: formattedSlot,
     src: `/photowall/photo_${formattedSlot}.jpg`,
-    isRealPhoto,
+    isRealPhoto: true,
   };
 });
 
@@ -170,7 +169,7 @@ function PhotoWallPage() {
           <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-4 py-2 border border-stone-800 bg-stone-950/80 backdrop-blur-sm text-[11px] font-hud text-foreground/80">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#50fa7b] animate-pulse" />
-              <span className="text-emerald-300 font-bold">25 MEMORY SLOTS</span>
+              <span className="text-emerald-300 font-bold">15 MEMORY SLOTS</span>
             </div>
             <span className="text-stone-700 hidden sm:inline">|</span>
             <div className="text-stone-400">
